@@ -37,10 +37,12 @@ void KalmanFilter::predictionStep(double dt)
             // Assume the initial velocity is 5 m/s at 45 degrees (VX,VY) = (5*cos(45deg),5*sin(45deg)) m/s
             state << 0, 0, 5.0*cos(M_PI/4), 5.0*sin(M_PI/4);
 
-            cov(0,0) = 0.01;
-            cov(1,1) = 0.01;
-            cov(2,2) = 0.01;
-            cov(3,3) = 0.01;
+            cov(0,0) = 0.1;
+            cov(1,1) = 0.1;
+            cov(2,2) = 0.001;
+            cov(3,3) = 0.001;
+
+
 
 
             setState(state);
@@ -100,15 +102,15 @@ void KalmanFilter::predictionStep(double dt)
         Q(1,1) = 0.1;
 
         MatrixXd L = MatrixXd(4,2);
+    
         // the first couple of lines to turn acce. into 
         // distance 
+
         // the other couple of lines is to turn distance 
         // into velocity 
 
         //**************************Commented Secttion **********/
 
-        /*
-        
         
         
         L << 0.5*dt*dt,0,
@@ -119,14 +121,26 @@ void KalmanFilter::predictionStep(double dt)
 
 
 
-        cov = stm * cov * stm.transpose()+ L*Q*L.transpose();
+        // cov =  stm * cov * stm.transpose() + L*Q*L.transpose();
+        cov =  stm * cov * stm.transpose()+ L*Q*L.transpose();
 
-        */
+        
+
+
+
+
        
 
         //**************************Commented Secttion **********/
 
         // ----------------------------------------------------------------------- //
+
+
+        // ********** update step ************* // 
+
+        
+
+
 
         setState(state);
         setCovariance(cov);
@@ -146,6 +160,9 @@ void KalmanFilter::handleGPSMeasurement(GPSMeasurement meas)
         // Hint: You can use the constants: GPS_POS_STD
         // ----------------------------------------------------------------------- //
         // ENTER YOUR CODE HERE 
+
+
+
 
 
         // It is always a good idea to check if everything works as expected !
@@ -168,6 +185,16 @@ void KalmanFilter::handleGPSMeasurement(GPSMeasurement meas)
         // ENTER YOUR CODE HERE
             VectorXd state = Vector4d::Zero();
             MatrixXd cov = Matrix4d::Zero();
+            
+            // mapping matrix from to 
+            MatrixXd H = MatrixXd(2,4);
+            H(0,0) = 1;
+            H(1,1) = 1;
+
+            // error in measurement 
+            MatrixXd R = Matrix2d::Zero();
+            R(0,0) = 0.2;
+            R(1,1) = 0.2;
 
 
 
