@@ -6,8 +6,8 @@ This repository is inspired by the lectures of **Dr. Cyrill Stachniss** and the 
 
 The following figures illustrate concepts related to **Kalman Filters** (EKF, UKF, etc.):
 
-![Figure 1](kalman-filter/figures/1.png)
-![Figure 2](kalman-filter/figures/2.png)
+![Figure 1](kalman-filter/figures/1.gif)
+![Figure 2](kalman-filter/figures/2.gif)
 
 
 - **SLAM Fundamentals**
